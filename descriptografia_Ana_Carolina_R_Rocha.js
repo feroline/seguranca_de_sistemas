@@ -1,4 +1,6 @@
 
+C
+
 //TODO: Refatorar
 
 function descriptografarCesar() {
