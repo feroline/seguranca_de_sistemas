@@ -1,41 +1,30 @@
-// import { criptografiaCesar } from "./criptografia_de_cesar.js";
-// import { criptografiaPolimorfica } from "./criptografia_de_cesar.js";
-
-// let mensagem = "CAROL";
-let caracteres = import("./caracteres.js");
-console.log(caracteres)
 
 // Object.entries
 
 let mensagemCriptografada = {};
 
 class Criptografias {
-    
-        __constructor(mensagem, chave) {
-            // this.mensagem = mensagem; 
-            this.mensagem = "CAROL"; 
+
+        constructor(mensagem, chave) {
+            //TODO: pedir para o usuário informar
+            this.mensagem = mensagem; 
             this.chave = chave; 
+          
+            const CRIPTO_CESAR = 'CESAR';
+            const CRIPTO_POLIMORFICA = 'POLIMORFICA';
+            const CRIPTO_PLAYFAIR = 'PLAYFAIR';
+
         }
         
         deCesar(){
-            // TODO: realizar chamada da função dos calculos aqui
 
-            Object.entries(caracteres).forEach((letraCrip) => {
-
-                Object.entries(this.mensagem).forEach((letraWord) => {
-
-                    if (letraWord[1].toLocaleUpperCase() == letraCrip[1]) {
-
-                        let valorLetraCrip = parseInt(letraCrip[0]);
-                        mensagemCriptografada[letraWord[0]] = (caracteres[valorLetraCrip + 3]);
-
-                        // console.log(letraWord[1], letraCrip[1], letraCrip[0], valorLetraCrip+3, caracteres[valorLetraCrip+3])
-                    }
-
-                });
+            let mensagemCriptografada = '';
+            
+            Object.entries(this.mensagem).forEach((indexLetra) => {
+                mensagemCriptografada += this.criptografiaAlfabetica(indexLetra,this.CRIPTO_CESAR);
             });
-            console.log(Object.entries(mensagemCriptografada).toString());
-            return;
+
+            return mensagemCriptografada;
         }
 
         dePolimorfica(){ 
@@ -46,7 +35,24 @@ class Criptografias {
             return;
         }
         
+        criptografiaAlfabetica(indexLetra, tipoCriptografia){
+            
+                let letra = indexLetra[1].toLocaleUpperCase();
+                let letraCriptografada = this.getTipoCriptografia(tipoCriptografia,letra); 
+                return letraCriptografada; 
+        }
+
+        getTipoCriptografia(tipoCriptografia,letra){
+
+            if(tipoCriptografia === this.CRIPTO_CESAR){
+                return caracteres[(getIndexOnCaracteres(letra) + 3)]
+            }else if(tipoCriptografia === this.CRIPTO_POLIMORFICA){
+
+            }else if(tipoCriptografia === this.CRIPTO_PLAYFAIR){
+
+            }
+        }
 }
 
-let criptografias = new Criptografias( "CAROL",  "CAROL");
+let criptografias = new Criptografias("CAROL");
 console.log(criptografias.deCesar());
