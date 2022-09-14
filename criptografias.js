@@ -32,33 +32,26 @@ class Criptografias {
             let mensagem = '';
             let chaveCriptografada = '';
             let tamanhoChave = this.chave.length;
-            let cont = 0;
-            
-            Object.entries(this.mensagem).forEach((indexLetra,index) => {
-                
-                mensagem += indexLetra[1];
+          
+          
+          
+            let arrayMessagem = this.getArrayMensage();
 
-                if( index === (tamanhoChave + cont - 1)){
-                    cont += tamanhoChave; 
-                    mensagem = mensagem.concat('.') 
-                }
-                
-            });
             
-            let arrayMessagem = mensagem.split('.');
-            let testesoma = '';
-            Object.entries(arrayMessagem[0]).forEach((indexLetra, indexMensagem) => {
-                let caracteresValuesMensagem = getIndexOnCaracteres(indexLetra[1]);
+            Object.entries(arrayMessagem).forEach((indexLetra, indexMensagem) => {
+            
+                let mensagemCaracterIndice = getIndexOnCaracteres(indexLetra[1]);
 
                 Object.entries(this.chave).forEach((indexLetraChave, indexChave) => { 
-                    let caracteresValuesChave = getIndexOnCaracteres(indexLetraChave[1])
 
+                    let chaveCaracterIndice = getIndexOnCaracteres(indexLetraChave[1]);
                     if(indexMensagem = indexChave ){
-                        
-                        TESTE SOMA É ´P SER A CRIPTGRAFIA
-                        testesoma += caracteres[(getIndexOnCaracteres(caracteresValuesMensagem + caracteresValuesChave))]; 
-                        FALTA UM CALCULO DE PORCENTAGEM BEM AQUI Q N ME LEMBRO
-                        console.log(testesoma)
+
+                        let somaIndices = mensagemCaracterIndice + chaveCaracterIndice; 
+                        // return (somaIndices) > caracteres.length ? somaIndices - caracteres.length : somaIndices; //TODO:  Adicionar este tratamento em todas as outras criptografiaslet teste= (somaIndices) > caracteres.length ? somaIndices - caracteres.length : somaIndices; //TODO:  Adicionar este tratamento em todas as outras criptografias
+                        let teste = (somaIndices) > caracteres.length ? somaIndices - caracteres.length : somaIndices; //TODO:  Adicionar este tratamento em todas as outras criptografiaslet teste= (somaIndices) > caracteres.length ? somaIndices - caracteres.length : somaIndices; //TODO:  Adicionar este tratamento em todas as outras criptografias
+                        console.log(teste)
+
                     }
                     
                 });
@@ -75,6 +68,23 @@ class Criptografias {
         
         dePlayFair(){
             return;
+        }
+
+        getArrayMensage(){
+            let mensagem = '';
+            let cont = 0;
+
+            Object.entries(this.mensagem).forEach((indexLetra,index) => {
+
+                mensagem += indexLetra[1];
+                if( index === (this.chave.length + cont - 1)){
+                    cont += this.chave.length; 
+                    mensagem = mensagem.concat('.') 
+                }
+
+            });
+
+            return mensagem.split('.')[0];
         }
         
         criptografiaAlfabetica(indexLetra, tipoCriptografia){
