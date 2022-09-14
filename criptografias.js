@@ -5,14 +5,15 @@ let mensagemCriptografada = {};
 
 class Criptografias {
 
+    CRIPTO_POLIMORFICA = "POLIMORFICA";
+    CRIPTO_CESAR = "CESAR";
+    CRIPTO_PLAYFAIR = "PLAYFAIR";
+
         constructor(mensagem, chave) {
             //TODO: pedir para o usuário informar
             this.mensagem = mensagem; 
             this.chave = chave; 
           
-            const CRIPTO_CESAR = 'CESAR';
-            const CRIPTO_POLIMORFICA = 'POLIMORFICA';
-            const CRIPTO_PLAYFAIR = 'PLAYFAIR';
 
         }
         
@@ -35,35 +36,15 @@ class Criptografias {
           
           
           
-            let arrayMessagem = this.getArrayMensage();
-
+            let somaIndices = this.getSomaIndices(this.getArrayMensage());
+            // console.log()
+            console.log(somaIndices)
+            somaIndices.forEach(indice => { //TODO: CRIAR FUNÇÃO
             
-            Object.entries(arrayMessagem).forEach((indexLetra, indexMensagem) => {
-            
-                let mensagemCaracterIndice = getIndexOnCaracteres(indexLetra[1]);
-
-                Object.entries(this.chave).forEach((indexLetraChave, indexChave) => { 
-
-                    let chaveCaracterIndice = getIndexOnCaracteres(indexLetraChave[1]);
-                    if(indexMensagem = indexChave ){
-
-                        let somaIndices = mensagemCaracterIndice + chaveCaracterIndice; 
-                        // return (somaIndices) > caracteres.length ? somaIndices - caracteres.length : somaIndices; //TODO:  Adicionar este tratamento em todas as outras criptografiaslet teste= (somaIndices) > caracteres.length ? somaIndices - caracteres.length : somaIndices; //TODO:  Adicionar este tratamento em todas as outras criptografias
-                        let teste = (somaIndices) > caracteres.length ? somaIndices - caracteres.length : somaIndices; //TODO:  Adicionar este tratamento em todas as outras criptografiaslet teste= (somaIndices) > caracteres.length ? somaIndices - caracteres.length : somaIndices; //TODO:  Adicionar este tratamento em todas as outras criptografias
-                        console.log(teste)
-
-                    }
-                    
-                });
-            
-                
+                mensagemCriptografada += this.criptografiaAlfabetica(indice,this.CRIPTO_POLIMORFICA)
             });
-
-            Object.entries(this.chave).forEach((indexLetra) => {
-                chaveCriptografada += this.criptografiaAlfabetica(indexLetra,this.CRIPTO_POLIMORFICA);
-            });
-
-           /// return [mensagemCriptografada,chaveCriptografada];
+        
+           return mensagemCriptografada;
         }
         
         dePlayFair(){
@@ -84,24 +65,73 @@ class Criptografias {
 
             });
 
-            return mensagem.split('.')[0];
+            return mensagem.split('.');
         }
         
-        criptografiaAlfabetica(indexLetra, tipoCriptografia){
+        getSomaIndices(arrayMessagem){
+            console.log(arrayMessagem)
+            let newIndices = []; 
+            let mensagemCompleta = []; 
+            let indiceLetra = '';
+            let indiceLetraChave = '';
             
-                let letra = indexLetra[1].toLocaleUpperCase();
-                let letraCriptografada = this.getTipoCriptografia(tipoCriptografia,letra); 
-                return letraCriptografada; 
+            Object.entries(arrayMessagem).forEach((palavras, indexPalavra) => {
+
+                let palavra = Object.entries(palavras[1]);
+                if(palavra != undefined && palavra != null && palavra != "" ){
+
+                    palavra.forEach(letra => {
+
+                       
+                        
+                        Object.entries(this.chave).forEach((letraChave, indexChave) => {  //TODO: fazer função
+
+                            
+    
+                            if(indexPalavra == indexChave){
+                                let somaIndices =  indiceLetra += getIndexOnCaracteres(letra[1]) + indiceLetraChave += getIndexOnCaracteres(letraChave[1]);
+                                console.log(somaIndices)
+
+                                return (somaIndices) > caracteres.length ? somaIndices - caracteres.length : somaIndices;
+                            }
+                            
+                        });
+                        // console.log(newIndices)
+                    });         
+                }
+               
+                // console.log(getIndexOnCaracteres(palavra[1]))
+                // let mensagemCaracterIndice = getIndexOnCaracteres(palavra[1]);
+                // Object.entries(this.chave).forEach((indexLetraChave, indexChave) => { 
+// 
+                    // let chaveCaracterIndice = getIndexOnCaracteres(indexLetraChave[1]);
+                    // if(indexMensagem = indexChave ){
+                        // let somaIndices = mensagemCaracterIndice + chaveCaracterIndice; 
+                      //  TODO:  Adicionar este tratamento em todas as outras criptografias 
+                        // newIndices.push( (somaIndices) > caracteres.length ? somaIndices - caracteres.length : somaIndices); 
+                    // }
+                    
+                // });
+                // 
+                // mensagemCompleta.push(newIndices);
+            });
+            // console.log(newIndices)
+            // return mensagemCompleta;
+        }
+
+        criptografiaAlfabetica(indexLetra, tipoCriptografia){
+
+            let letra = (indexLetra[1]) ? indexLetra[1].toLocaleUpperCase() : indexLetra; 
+            let letraCriptografada = this.getTipoCriptografia(tipoCriptografia,letra); 
+            return letraCriptografada; 
+
         }
 
         getTipoCriptografia(tipoCriptografia,letra){
-
             if(tipoCriptografia === this.CRIPTO_CESAR){
                 return caracteres[(getIndexOnCaracteres(letra) + 3)]
-            }else if(tipoCriptografia === this.CRIPTO_POLIMORFICA){ //somar a letra da mensagem mais a letra da chave
-             
-                    return caracteres[(getIndexOnCaracteres(letra) + 3)]
-                
+            }else if(tipoCriptografia === this.CRIPTO_POLIMORFICA){ 
+                return caracteres[letra];
             }else if(tipoCriptografia === this.CRIPTO_PLAYFAIR){
 
             }
